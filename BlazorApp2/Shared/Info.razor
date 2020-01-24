@@ -1,0 +1,53 @@
+﻿<h3>Info for @Id</h3>
+
+<EditForm Model="@_dataModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText id="name" @bind-Value="_dataModel.NewValue" />
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+
+<ul>
+    @foreach(var item in Data)
+    {
+        <li>@item.NewValue</li>
+    }
+</ul>
+
+@code {
+    private DataModel _dataModel = new DataModel();
+
+    [Inject]
+    protected DataState DataState { get; set; }
+
+    [Parameter]
+    public string Id { get; set; }
+
+    public List<DataModel> Data { get; set; } = new List<DataModel>();
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        DataState.Notify += updateData;
+    }
+
+    private async Task updateData(string id, DataModel newData)
+    {
+        if (Id != id) return;
+
+        await InvokeAsync(() =>
+        {
+            Data.Add(newData);
+            StateHasChanged();
+        });
+    }
+
+    public async Task HandleValidSubmit()
+    {
+        await DataState.Update(Id, _dataModel);
+    }
+}

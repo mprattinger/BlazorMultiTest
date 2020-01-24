@@ -1,0 +1,26 @@
+﻿@page "/detail/{KopId}"
+
+<h3>Unit @UnitId Detail for @KopId</h3>
+
+<p>KopID: @KopId</p>
+<p>GroupId: @GroupId</p>
+<p>Uri: @CurrentUri</p>
+
+@if (String.IsNullOrEmpty(GroupId))
+{
+    <ul>
+        <li><button @onclick="@(() => ToItems("1"))">Group 1</button></li>
+        <li><button @onclick="@(() => ToItems("2"))">Group 2</button></li>
+        <li><button @onclick="@(() => ToItems("3"))">Group 3</button></li>
+        <li><button @onclick="@(() => ToItems("4"))">Group 4</button></li>
+    </ul>
+}
+else
+{
+    <ul>
+        <li><button @onclick="@(() => SaveItem("1"))">Item 1</button></li>
+        <li><button @onclick="@(() => SaveItem("2"))">Item 2</button></li>
+        <li><button @onclick="@(() => SaveItem("3"))">Item 3</button></li>
+        <li><button @onclick="@(() => SaveItem("4"))">Item 4</button></li>
+    </ul>
+}

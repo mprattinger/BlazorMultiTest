@@ -1,0 +1,24 @@
+﻿@page "/overview/{UnitId}"
+
+<h3>Overview for @UnitId</h3>
+
+<ul>
+    <li><button @onclick="@(()=>ToGroup("1234"))">ID 1234</button></li>
+    <li><button @onclick="@(()=>ToGroup("4321"))">ID 4321</button></li>
+    <li><button @onclick="@(()=>ToGroup("5678"))">ID 5678</button></li>
+    <li><button @onclick="@(()=>ToGroup("8765"))">ID 8765</button></li>
+</ul>
+
+
+@code {
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    [Parameter]
+    public string UnitId { get; set; }
+
+    public void ToGroup(string id)
+    {
+        NavigationManager.NavigateTo($"/detail/{id}?unitid={UnitId}");
+    }
+}
